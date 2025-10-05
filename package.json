@@ -1,0 +1,30 @@
+{
+	"name": "bg.yifen9.li",
+	"title": "bg.yifen9.li",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"astro": "bunx --bun astro",
+		"dev": "bun run data:all && bunx --bun astro dev --host 0.0.0.0 --port 4321",
+		"build": "bun run data:all && bunx --bun astro build",
+		"preview": "bunx --bun astro preview --host 0.0.0.0 --port 4321",
+		"data:sessions": "julia --project=. scripts/collect.jl",
+		"data:elo": "julia --project=. scripts/elo.jl",
+		"data:games": "julia --project=. scripts/games_stats.jl",
+		"data:all": "bun run data:sessions && bun run data:elo && bun run data:games",
+		"julia:setup": "julia --project=. -e 'using Pkg; Pkg.instantiate(); Pkg.precompile()'",
+		"julia:deps": "julia --project=. -e 'using Pkg; Pkg.activate(\".\"); Pkg.add([\"YAML\",\"JSON3\",\"Glob\"]); Pkg.precompile()'",
+		"lint": "biome check .",
+		"fix": "biome check --write .",
+		"update": "bun update --latest"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.5",
+		"@tailwindcss/vite": "^4.1.14",
+		"tailwindcss": "^4.1.14",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"astro": "^4.16.19"
+	}
+}

@@ -1,0 +1,31 @@
+---
+import games from "../../data/games.json";
+
+const rows = games;
+---
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Games</title>
+  </head>
+  <body>
+    <h1>Games</h1>
+    <table>
+      <thead>
+        <tr><th>Game</th><th>Avg</th><th>Median</th><th>Ratings</th><th>Plays</th><th>Last Played</th></tr>
+      </thead>
+      <tbody>
+        {rows.map(r => (
+          <tr>
+            <td>{r.game}</td>
+            <td>{String(r.avg)}</td>
+            <td>{String(r.median)}</td>
+            <td>{r.ratings_count}</td>
+            <td>{r.plays}</td>
+            <td>{r.last_played}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+---
+import ratings from "../../data/elo/ratings.json";
+
+const rows = ratings;
+---
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Players</title>
+  </head>
+  <body>
+    <h1>Players</h1>
+    <table>
+      <thead>
+        <tr><th>Player</th><th>Rating</th><th>Games</th></tr>
+      </thead>
+      <tbody>
+        {rows.map(r => (
+          <tr>
+            <td>{r.player}</td>
+            <td>{r.rating}</td>
+            <td>{r.games_played}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </body>
+</html>

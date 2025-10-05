@@ -15,5 +15,9 @@ services:
         apt-get install -y ca-certificates git curl &&
         curl -fsSL https://install.julialang.org | sh -s -- -y &&
         ~/.juliaup/bin/juliaup default release &&
+        bun install &&
+        bun run julia:deps &&
+        bun run julia:setup &&
+        bun run build &&
         exec sleep infinity
       "
