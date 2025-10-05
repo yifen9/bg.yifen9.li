@@ -1,0 +1,19 @@
+services:
+  bg.yifen9.li:
+    image: oven/bun:latest
+    container_name: bg.yifen9.li
+    working_dir: /workspace
+    ports:
+      - "4321:4321"
+    environment:
+      - PATH=/root/.juliaup/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    volumes:
+      - "..:/workspace"
+    command: >
+      bash -lc "
+        apt-get update &&
+        apt-get install -y ca-certificates git curl &&
+        curl -fsSL https://install.julialang.org | sh -s -- -y &&
+        ~/.juliaup/bin/juliaup default release &&
+        exec sleep infinity
+      "
