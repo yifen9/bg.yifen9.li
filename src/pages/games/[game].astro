@@ -1,13 +1,15 @@
 ---
-import sessions from "../../../data/sessions.json";
 import games from "../../../data/games.json";
+import sessions from "../../../data/sessions.json";
 export async function getStaticPaths() {
-  const uniq = [...new Set(sessions.map((s) => s.game))];
-  return uniq.map((g) => ({ params: { game: g } }));
+	const uniq = [...new Set(sessions.map((s) => s.game))];
+	return uniq.map((g) => ({ params: { game: g } }));
 }
 const g = Astro.params.game;
 const info = games.find((x) => x.game === g);
-const list = sessions.filter((s) => s.game === g).sort((a,b)=>a.date<b.date?1:-1);
+const list = sessions
+	.filter((s) => s.game === g)
+	.sort((a, b) => (a.date < b.date ? 1 : -1));
 ---
 <html>
   <head><meta charset="utf-8" /><title>{g}</title></head>

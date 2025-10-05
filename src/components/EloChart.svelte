@@ -1,13 +1,25 @@
 <script>
-  export let points = [];
-  let w = 800, h = 320, pad = 32;
-  const xs = points.map((p) => new Date(p.date).getTime());
-  const ys = points.map((p) => p.rating);
-  const minx = Math.min(...xs), maxx = Math.max(...xs);
-  const miny = Math.min(...ys), maxy = Math.max(...ys);
-  function X(t){ return pad + (w-2*pad) * ((new Date(t).getTime()-minx)/(maxx-minx||1)); }
-  function Y(v){ return h - pad - (h-2*pad) * ((v-miny)/((maxy-miny)||1)); }
-  const pathD = points.map((p,i)=> `${i===0?"M":"L"}${X(p.date)},${Y(p.rating)}`).join(" ");
+export const points = [];
+const w = 800,
+	h = 320,
+	pad = 32;
+const xs = points.map((p) => new Date(p.date).getTime());
+const ys = points.map((p) => p.rating);
+const minx = Math.min(...xs),
+	maxx = Math.max(...xs);
+const miny = Math.min(...ys),
+	maxy = Math.max(...ys);
+function X(t) {
+	return (
+		pad + (w - 2 * pad) * ((new Date(t).getTime() - minx) / (maxx - minx || 1))
+	);
+}
+function Y(v) {
+	return h - pad - (h - 2 * pad) * ((v - miny) / (maxy - miny || 1));
+}
+const pathD = points
+	.map((p, i) => `${i === 0 ? "M" : "L"}${X(p.date)},${Y(p.rating)}`)
+	.join(" ");
 </script>
 
 <svg {w} {h} viewBox={`0 0 ${w} ${h}`} style="max-width:100%">

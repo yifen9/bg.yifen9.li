@@ -6,12 +6,25 @@ export async function getStaticPaths() {
 }
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const gms = entry.data.games;
 ---
 <html>
   <head><meta charset="utf-8" /><title>{entry.data.title}</title></head>
   <body>
     <h1>{entry.data.title}</h1>
-    <p>{entry.data.date}</p>
+    <p>Date: {entry.data.date}</p>
+    <p>Players: {entry.data.players.join(", ")}</p>
+    <h2>Sessions</h2>
+    <ul>
+      {gms.map((g) => (
+        <li>
+          <a href={`/sessions/${g.session_id}`}>{g.session_id}</a>
+          — <a href={`/games/${encodeURIComponent(g.name)}`}>{g.name}</a>
+          — Participants: {g.participants.join(", ")}
+        </li>
+      ))}
+    </ul>
+    <h2>Post</h2>
     <Content />
   </body>
 </html>

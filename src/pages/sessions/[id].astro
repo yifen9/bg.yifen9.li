@@ -1,7 +1,7 @@
 ---
 import sessions from "../../../data/sessions.json";
 export async function getStaticPaths() {
-  return sessions.map((s) => ({ params: { id: s.session_id }, props: { s } }));
+	return sessions.map((s) => ({ params: { id: s.session_id }, props: { s } }));
 }
 const { s } = Astro.props;
 const slug = s.source.replace(/\.md$/, "");

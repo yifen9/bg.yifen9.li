@@ -1,6 +1,1 @@
-[
-	{ "rating": 1530.62, "games_played": 2, "player": "Alice" },
-	{ "rating": 1500.01, "games_played": 2, "player": "Bob" },
-	{ "rating": 1485.13, "games_played": 2, "player": "Carol" },
-	{ "rating": 1484.23, "games_played": 1, "player": "Dave" }
-]
+[{"rating":1530.62,"games_played":2,"player":"Alice"},{"rating":1500.01,"games_played":2,"player":"Bob"},{"rating":1485.13,"games_played":2,"player":"Carol"},{"rating":1484.23,"games_played":1,"player":"Dave"}]

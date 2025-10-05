@@ -3,15 +3,16 @@ import DataTable from "../components/DataTable.svelte";
 import sessions from "../../data/sessions.json";
 const columns = [
   { key: "date", label: "Date" },
-  { key: "game", label: "Game", link: (r) => `/games/${encodeURIComponent(r.game)}` },
-  { key: "session_id", label: "Session", link: (r) => `/sessions/${r.session_id}` },
+  { key: "game", label: "Game", link: { prefix: "/games/", key: "game" } },
+  { key: "session_id", label: "Session", link: { prefix: "/sessions/", key: "session_id", encode: false } },
   { key: "participants", label: "Participants", render: (r) => r.participants.join(", ") }
 ];
+const rowLink = { prefix: "/sessions/", key: "session_id", encode: false };
 ---
 <html>
   <head><meta charset="utf-8" /><title>Sessions</title></head>
   <body>
     <h1>Sessions</h1>
-    <DataTable client:load {columns} rows={sessions} initialSort={{key:"date",dir:"desc"}} />
+    <DataTable client:load {columns} rows={sessions} {rowLink} initialSort={{key:"date",dir:"desc"}} />
   </body>
 </html>
