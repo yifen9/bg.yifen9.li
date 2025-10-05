@@ -5,7 +5,7 @@ const columns = [
   { key: "date", label: "Date" },
   { key: "game", label: "Game", link: { prefix: "/games/", key: "game" } },
   { key: "session_id", label: "Session", link: { prefix: "/sessions/", key: "session_id", encode: false } },
-  { key: "participants", label: "Participants", render: (r) => r.participants.join(", ") }
+  { key: "participants", label: "Participants", join: ", " }
 ];
 const rowLink = { prefix: "/sessions/", key: "session_id", encode: false };
 ---

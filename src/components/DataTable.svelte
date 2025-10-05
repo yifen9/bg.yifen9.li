@@ -1,8 +1,8 @@
 <script>
-  export let columns = [];
-  export let rows = [];
-  export let initialSort = null;
-  export let rowLink = null;        // { prefix: "/sessions/", key: "session_id", encode: true }
+  export let columns = [];              
+  export let rows = [];                 
+  export let initialSort = null;        
+  export let rowLink = null;           
 
   let q = "";
   let sortKey = initialSort?.key ?? null;
@@ -14,9 +14,8 @@
 
   function buildHref(spec, row) {
     if (!spec) return null;
-    const key = spec.key ?? spec.hrefKey ?? spec.paramKey ?? spec.field ?? spec.for;
-    if (!key) return null;
-    const v = row[key];
+    const key = spec.key ?? spec.hrefKey ?? spec.field ?? spec.for;
+    const v = row[key ?? ""] ?? "";
     const enc = spec.encode !== false;
     const val = enc ? encodeURIComponent(String(v)) : String(v);
     const pre = spec.prefix ?? "";
@@ -27,6 +26,12 @@
   function go(row) {
     const h = buildHref(rowLink, row);
     if (h) location.href = h;
+  }
+
+  function displayValue(c, row) {
+    const v = row[c.key];
+    if (Array.isArray(v) && typeof c.join === "string") return v.join(c.join);
+    return v;
   }
 
   $: filtered = rows.filter(r => {
@@ -65,12 +70,12 @@
             <td>
               {#if c.link}
                 {#if buildHref(c.link, r)}
-                  <a href={buildHref(c.link, r)}>{c.render ? c.render(r) : r[c.key]}</a>
+                  <a href={buildHref(c.link, r)}>{displayValue(c, r)}</a>
                 {:else}
-                  {c.render ? c.render(r) : r[c.key]}
+                  {displayValue(c, r)}
                 {/if}
               {:else}
-                {c.render ? c.render(r) : r[c.key]}
+                {displayValue(c, r)}
               {/if}
             </td>
           {/each}

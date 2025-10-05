@@ -1,6 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-const posts = (await getCollection("blog")).sort((a, b) => (a.data.date < b.data.date ? 1 : -1));
+
+const posts = (await getCollection("blog")).sort((a, b) =>
+	a.data.date < b.data.date ? 1 : -1,
+);
 ---
 <html>
   <head><meta charset="utf-8" /><title>Blog</title></head>
