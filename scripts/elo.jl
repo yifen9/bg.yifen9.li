@@ -24,14 +24,15 @@ function updater!(a, b, Sa; K=32.0)
     ratings[b] = Rb2
 end
 
-function record_hist(date)
+function record_hist(date, sid)
     for (p, r) in ratings
-        push!(hist, Dict("date"=>date, "player"=>p, "rating"=>r, "games_played"=>get(games_played, p, 0)))
+        push!(hist, Dict("date"=>date, "player"=>p, "rating"=>r, "games_played"=>get(games_played, p, 0), "session_id"=>sid))
     end
 end
 
 for s in sessions
     date = s["date"]
+    sid = s["session_id"]
     parts = Vector{String}(s["participants"])
     ranks = Vector{Int}(s["ranks"])
     n = length(parts)
@@ -52,7 +53,7 @@ for s in sessions
             end
         end
     end
-    record_hist(date)
+    record_hist(date, sid)
 end
 
 elo_dir = joinpath(data_dir, "elo")

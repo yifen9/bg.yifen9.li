@@ -1,0 +1,25 @@
+---
+import history from "../../../data/elo/history.json";
+import ratings from "../../../data/elo/ratings.json";
+import EloChart from "../../components/EloChart.svelte";
+export async function getStaticPaths() {
+  const uniq = [...new Set(history.map((h) => h.player))];
+  return uniq.map((p) => ({ params: { player: p } }));
+}
+const player = Astro.params.player;
+const series = history.filter((h) => h.player === player).sort((a,b)=>a.date<b.date?-1:1);
+const current = ratings.find((r) => r.player === player);
+---
+<html>
+  <head><meta charset="utf-8" /><title>{player}</title></head>
+  <body>
+    <h1>{player}</h1>
+    {current && (
+      <div>
+        <p>Rating: {current.rating}</p>
+        <p>Games Played: {current.games_played}</p>
+      </div>
+    )}
+    <EloChart client:load points={series} />
+  </body>
+</html>

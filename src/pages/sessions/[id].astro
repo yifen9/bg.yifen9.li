@@ -1,0 +1,18 @@
+---
+import sessions from "../../../data/sessions.json";
+export async function getStaticPaths() {
+  return sessions.map((s) => ({ params: { id: s.session_id }, props: { s } }));
+}
+const { s } = Astro.props;
+const slug = s.source.replace(/\.md$/, "");
+---
+<html>
+  <head><meta charset="utf-8" /><title>Session {s.session_id}</title></head>
+  <body>
+    <h1>Session {s.session_id}</h1>
+    <p>Date: {s.date}</p>
+    <p>Game: <a href={`/games/${encodeURIComponent(s.game)}`}>{s.game}</a></p>
+    <p>Participants: {s.participants.join(", ")}</p>
+    <p><a href={`/blog/${slug}`}>Blog Post</a></p>
+  </body>
+</html>

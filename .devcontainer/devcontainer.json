@@ -10,7 +10,8 @@
 				"bradlc.vscode-tailwindcss",
 				"oven.bun-vscode",
 				"julialang.language-julia",
-				"antfu.vite"
+				"svelte.svelte-vscode",
+				"ms-vscode.vscode-typescript-next"
 			]
 		}
 	}

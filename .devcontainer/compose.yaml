@@ -1,6 +1,9 @@
 services:
   bg.yifen9.li:
-    image: oven/bun:latest
+    image: ghcr.io/yifen9/bg.yifen9.li
+    build:
+      context: ..
+      dockerfile: Dockerfile
     container_name: bg.yifen9.li
     working_dir: /workspace
     ports:
