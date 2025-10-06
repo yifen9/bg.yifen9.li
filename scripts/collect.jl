@@ -8,12 +8,12 @@ out_dir = joinpath(@__DIR__, "..", "data")
 isdir(out_dir) || mkpath(out_dir)
 
 function parse_frontmatter(s::String)
-    if occursin(r"^---\s", s)
-        m = match(r"^---\s*\n(.*?)\n---\s*\n"s, s)
-        m === nothing && error("frontmatter not found")
+    if startswith(s, "---") || startswith(s, "\ufeff---")
+        m = match(r"^\ufeff?---\s*(?:\r?\n)(.*?)(?:\r?\n)---(?:\r?\n|$)"s, s)
+        m === nothing && error("frontmatter block malformed")
         return YAML.load(String(m.captures[1]))
     else
-        error("frontmatter block missing")
+        error("frontmatter not found")
     end
 end
 

@@ -1,6 +1,7 @@
 ---
 import DataTable from "../components/DataTable.svelte";
 import ratings from "../../data/elo/ratings.json";
+const rows = Array.isArray(ratings) ? ratings : [];
 const columns = [
   { key: "player", label: "Player", link: { prefix: "/players/", key: "player" } },
   { key: "rating", label: "Rating" },
@@ -12,6 +13,8 @@ const rowLink = { prefix: "/players/", key: "player" };
   <head><meta charset="utf-8" /><title>Players</title></head>
   <body>
     <h1>Players</h1>
-    <DataTable client:load {columns} rows={ratings} {rowLink} initialSort={{key:"rating",dir:"desc"}} />
+    {rows.length
+      ? <DataTable client:load {columns} rows={rows} {rowLink} initialSort={{key:"rating",dir:"desc"}} />
+      : <p>No players data.</p>}
   </body>
 </html>

@@ -1,6 +1,7 @@
 ---
 import DataTable from "../components/DataTable.svelte";
 import sessions from "../../data/sessions.json";
+const rows = Array.isArray(sessions) ? sessions : [];
 const columns = [
   { key: "date", label: "Date" },
   { key: "game", label: "Game", link: { prefix: "/games/", key: "game" } },
@@ -13,6 +14,8 @@ const rowLink = { prefix: "/sessions/", key: "session_id", encode: false };
   <head><meta charset="utf-8" /><title>Sessions</title></head>
   <body>
     <h1>Sessions</h1>
-    <DataTable client:load {columns} rows={sessions} {rowLink} initialSort={{key:"date",dir:"desc"}} />
+    {rows.length
+      ? <DataTable client:load {columns} rows={rows} {rowLink} initialSort={{key:"date",dir:"desc"}} />
+      : <p>No sessions data.</p>}
   </body>
 </html>

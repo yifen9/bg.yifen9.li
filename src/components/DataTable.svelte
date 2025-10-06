@@ -1,8 +1,8 @@
 <script>
-  export let columns = [];              
-  export let rows = [];                 
-  export let initialSort = null;        
-  export let rowLink = null;           
+  export let columns = [];
+  export let rows = [];
+  export let initialSort = null;
+  export let rowLink = null;
 
   let q = "";
   let sortKey = initialSort?.key ?? null;
@@ -15,7 +15,9 @@
   function buildHref(spec, row) {
     if (!spec) return null;
     const key = spec.key ?? spec.hrefKey ?? spec.field ?? spec.for;
-    const v = row[key ?? ""] ?? "";
+    const has = key && (key in row);
+    if (!has) return null;
+    const v = row[key];
     const enc = spec.encode !== false;
     const val = enc ? encodeURIComponent(String(v)) : String(v);
     const pre = spec.prefix ?? "";
@@ -25,7 +27,9 @@
 
   function go(row) {
     const h = buildHref(rowLink, row);
-    if (h) location.href = h;
+    if (h) {
+      if (typeof window !== "undefined") window.location.href = h;
+    }
   }
 
   function displayValue(c, row) {
@@ -34,7 +38,8 @@
     return v;
   }
 
-  $: filtered = rows.filter(r => {
+  $: safeRows = Array.isArray(rows) ? rows : [];
+  $: filtered = safeRows.filter(r => {
     if (!q) return true;
     const s = Object.values(r).map(norm).join(" ");
     return s.includes(q.toLowerCase());
@@ -53,6 +58,7 @@
 
 <div>
   <input type="search" placeholder="Filter" value={q} on:input={setQuery} />
+  <div>Rows: {safeRows.length}</div>
   <table>
     <thead>
       <tr>
@@ -68,12 +74,8 @@
         <tr on:click={() => go(r)} style="cursor: {rowLink ? 'pointer' : 'default'}">
           {#each columns as c}
             <td>
-              {#if c.link}
-                {#if buildHref(c.link, r)}
-                  <a href={buildHref(c.link, r)}>{displayValue(c, r)}</a>
-                {:else}
-                  {displayValue(c, r)}
-                {/if}
+              {#if c.link && buildHref(c.link, r)}
+                <a href={buildHref(c.link, r)}>{displayValue(c, r)}</a>
               {:else}
                 {displayValue(c, r)}
               {/if}

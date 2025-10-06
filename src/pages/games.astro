@@ -1,6 +1,7 @@
 ---
 import DataTable from "../components/DataTable.svelte";
 import games from "../../data/games.json";
+const rows = Array.isArray(games) ? games : [];
 const columns = [
   { key: "game", label: "Game", link: { prefix: "/games/", key: "game" } },
   { key: "avg", label: "Avg" },
@@ -15,6 +16,8 @@ const rowLink = { prefix: "/games/", key: "game" };
   <head><meta charset="utf-8" /><title>Games</title></head>
   <body>
     <h1>Games</h1>
-    <DataTable client:load {columns} rows={games} {rowLink} initialSort={{key:"last_played",dir:"desc"}} />
+    {rows.length
+      ? <DataTable client:load {columns} rows={rows} {rowLink} initialSort={{key:"last_played",dir:"desc"}} />
+      : <p>No games data.</p>}
   </body>
 </html>

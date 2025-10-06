@@ -141,9 +141,9 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
-"2025-10-05.md": {
-	id: "2025-10-05.md";
-  slug: "2025-10-05";
+"2025-10-06.md": {
+	id: "2025-10-06.md";
+  slug: "2025-10-06";
   body: string;
   collection: "blog";
   data: any
@@ -153,7 +153,12 @@ declare module 'astro:content' {
 	};
 
 	type DataEntryMap = {
-		
+		"assets": Record<string, {
+  id: string;
+  collection: "assets";
+  data: any;
+}>;
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

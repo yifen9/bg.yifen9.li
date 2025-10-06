@@ -58,23 +58,21 @@ for s in sessions
     end
 end
 
-function medianf(v::Vector{Float64})
-    isempty(v) && return NaN
-    median(v)
-end
+safe_round(x::Float64) = isnan(x) ? nothing : round(x; digits=2)
+safe_median(v::Vector{Float64}) = isempty(v) ? nothing : safe_round(median(v))
 
 out = Vector{Dict{String,Any}}()
 for (game, a) in by_game
-    avg = a.n == 0 ? NaN : a.sum / a.n
-    med = medianf(a.values)
-    per_player = Dict{String,Float64}()
+    avg = a.n == 0 ? nothing : safe_round(a.sum / a.n)
+    med = safe_median(a.values)
+    per_player = Dict{String,Any}()
     for (p, (s, n)) in a.by_player
-        per_player[p] = n == 0 ? NaN : s / n
+        per_player[p] = n == 0 ? nothing : safe_round(s / n)
     end
     push!(out, Dict(
         "game" => game,
-        "avg" => round(avg; digits=2),
-        "median" => isnan(med) ? med : round(med; digits=2),
+        "avg" => avg,
+        "median" => med,
         "ratings_count" => a.n,
         "plays" => a.plays,
         "first_played" => string(a.first_date),
