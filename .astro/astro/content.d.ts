@@ -155,6 +155,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: any
 } & { render(): Render[".md"] };
+"2025-10-28.md": {
+	id: "2025-10-28.md";
+  slug: "2025-10-28";
+  body: string;
+  collection: "blog";
+  data: any
+} & { render(): Render[".md"] };
 };
 
 	};

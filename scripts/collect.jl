@@ -3,7 +3,9 @@ using JSON3
 using Dates
 using Glob
 
-md_dir = joinpath(@__DIR__, "..", "src", "content", "blog")
+base = joinpath(@__DIR__, "..", "src")
+cands = filter(isdir, [joinpath(base, "content", "blog"), joinpath(base, "blog")])
+globs = reduce(vcat, [glob("*.md", d) for d in cands])
 out_dir = joinpath(@__DIR__, "..", "data")
 isdir(out_dir) || mkpath(out_dir)
 
@@ -18,8 +20,8 @@ function parse_frontmatter(s::String)
 end
 
 sessions = Vector{Dict{String,Any}}()
-for f in sort(glob("*.md", md_dir))
-    text = read(joinpath(md_dir, f), String)
+for f in sort(globs)
+    text = read(f, String)
     y = parse_frontmatter(text)
     date = y["date"]
     title = y["title"]
@@ -33,6 +35,7 @@ for f in sort(glob("*.md", md_dir))
             "ranks" => g["ranks"],
             "scores" => get(g, "scores", nothing),
             "ratings" => get(g, "ratings", nothing),
+            "minutes" => get(g, "minutes", nothing),
             "source" => f
         ))
     end

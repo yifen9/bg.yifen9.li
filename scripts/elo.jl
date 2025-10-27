@@ -30,6 +30,31 @@ function record_hist(date, sid)
     end
 end
 
+function load_minutes_map()
+    fp = joinpath(data_dir, "game_minutes.json")
+    if isfile(fp)
+        arr = JSON3.read(read(fp, String))
+        d = Dict{String,Int}()
+        for x in arr
+            d[String(x["game"])] = Int(x["minutes"])
+        end
+        return d
+    else
+        return Dict{String,Int}()
+    end
+end
+
+minutes_map = load_minutes_map()
+
+function pick_minutes(s, minutes_map)
+    m = haskey(s, "minutes") ? s["minutes"] : nothing
+    if m !== nothing
+        return Int(m)
+    end
+    g = haskey(s, "game") ? String(s["game"]) : ""
+    return get(minutes_map, g, nothing)
+end
+
 for s in sessions
     date = s["date"]
     sid = s["session_id"]
@@ -39,7 +64,10 @@ for s in sessions
     for p in parts
         games_played[p] = get(games_played, p, 0) + 1
     end
-    K = 32.0 / max(n - 1, 1)
+    m = pick_minutes(s, minutes_map)
+    w = m === nothing ? 1.0 : max(0.0, Float64(m)) / 60.0
+    Kbase = 32.0 / max(n - 1, 1)
+    K = Kbase * w
     for i in 1:n-1
         for j in i+1:n
             ri = ranks[i]
