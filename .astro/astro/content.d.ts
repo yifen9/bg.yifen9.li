@@ -162,6 +162,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: any
 } & { render(): Render[".md"] };
+"2025-11-10.md": {
+	id: "2025-11-10.md";
+  slug: "2025-11-10";
+  body: string;
+  collection: "blog";
+  data: any
+} & { render(): Render[".md"] };
 };
 
 	};

@@ -6,12 +6,12 @@
       "dependencies": {
         "@astrojs/svelte": "^7.2.0",
         "astro": "^4.16.19",
-        "svelte": "^5.39.8",
+        "svelte": "^5.42.2",
       },
       "devDependencies": {
-        "@biomejs/biome": "^2.2.5",
-        "@tailwindcss/vite": "^4.1.14",
-        "tailwindcss": "^4.1.14",
+        "@biomejs/biome": "^2.3.1",
+        "@tailwindcss/vite": "^4.1.16",
+        "tailwindcss": "^4.1.16",
         "typescript": "^5.9.3",
       },
     },
